@@ -39,8 +39,8 @@ export default class Select extends React.PureComponent {
 		duration: PropTypes.number,
 		
 		//Elements
-		renderButton: PropTypes.element,
-		renderOptionItem: PropTypes.element,
+		renderButton: PropTypes.func,
+		renderOptionItem: PropTypes.func,
 	};
 
 	/**
@@ -164,7 +164,7 @@ export default class Select extends React.PureComponent {
 			if (pressedVal.value !== undefined) 
 				this.setState({selectedValue: pressedVal.value})
 			this.setState({selected: pressedVal})
-			this.props.onSelect(this.state.selected)
+			this.props.onSelect(pressedVal)
 			this.closeModal()
 		}
 	}
@@ -224,7 +224,7 @@ export default class Select extends React.PureComponent {
 			<View>
 				<TouchableWithoutFeedback onPress={this.openModal}>
 					{
-						(React.isValidElement(this.props.renderButton))?
+						(this.props.renderButton)?
 						<View>
 							{this.props.renderButton(this.state.selectedValue)}
 						</View>:
